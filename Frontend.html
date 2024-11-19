@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Stock News</title>
+</head>
+<body>
+    <h1>Real-Time Stock News</h1>
+    <div id="news"></div>
+
+    <script>
+        async function fetchNews(symbol) {
+            const response = await fetch(`/news/${symbol}`);
+            const news = await response.json();
+            
+            const newsContainer = document.getElementById('news');
+            newsContainer.innerHTML = news.map(article => `
+                <div>
+                    <h3>${article.headline}</h3>
+                    <p>${article.summary}</p>
+                    <a href="${article.url}" target="_blank">Read more</a>
+                </div>
+            `).join('');
+        }
+
+        // Example for Apple stock
+        fetchNews('AAPL');
+    </script>
+</body>
+</html>
